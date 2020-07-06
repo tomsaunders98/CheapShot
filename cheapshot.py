@@ -51,7 +51,7 @@ def checktoxic(tweets):
     return toxictweets
 
 
-def findtweets(usernames):
+def findtweets(usernames, limit):
     for username in usernames:
         print(f"Searching for Tweets for @{username}")
         print("===================================================")
@@ -60,6 +60,8 @@ def findtweets(usernames):
         c.Debug = True
         c.Store_csv = True
         c.Custom_csv = ["tweet", "date", "link"]
+        if limit != 0:
+            c.Limit = limit
         c.Output = "temp.csv"
         c.Hide_output = True
         twint.run.Search(c)
@@ -86,6 +88,11 @@ def get_parser():
         "--file",
         help="A List of Twitter Usernames",
     )
+    parser.add_argument(
+        "-l",
+        "--limit",
+        help="Limit the number of tweets collected",
+    )
     return parser
 
 def mainquery():
@@ -107,11 +114,15 @@ def mainquery():
                 user = line.rstrip()
                 user = user.replace("@", "")
                 usernames.append(user)
+    if not opts.limit:
+        limit = 0
+    else:
+        limit = opts.limit
     if len(usernames) == 0:
         print("No username entered.")
         sys.exit(1)
     else:
-        tweets = findtweets(usernames)
+        tweets = findtweets(usernames, limit)
         if len(tweets) == 0:
             print("No bad tweets found.")
         else:

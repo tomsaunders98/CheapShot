@@ -10,6 +10,7 @@ Firstly, ensure that all the requirements are installed. The CheapShot.py file t
 | --user   | -u        | Search for toxic tweets for single user by username                                                        |
 | --file   | -f        | Search for toxic tweets for multiple users by txt file containing list of usernames seperated by a newline |
 | --help   | -h        | Show descriptions for options                                                                              |
+| --limit  | -l        | Limit the number of tweets collected                                                                       |
 
 
 ### How it works
